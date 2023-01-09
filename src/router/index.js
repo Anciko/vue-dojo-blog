@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import PostDetailView from "../views/PostDetailView.vue";
 import PostCreateView from "../views/PostCreateView.vue";
 import TagView from "../views/TagView.vue";
+import RealTimeData from '../views/RealTimeData.vue';
 
 
 const router = createRouter({
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/tags/:tag',
       name: "tags",
       component: TagView
+    },
+    {
+      path: '/realtime-data',
+      name: 'realtimedata',
+      component: RealTimeData
     }
   ],
 });

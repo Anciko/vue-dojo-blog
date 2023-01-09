@@ -24,7 +24,10 @@
 
 <script>
 import { ref } from '@vue/reactivity';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { collection, addDoc } from "firebase/firestore";
+import { firedb, timestamp } from '../firebase/config';
+
 
 export default {
     setup() {
@@ -47,22 +50,16 @@ export default {
             let post = {
                 title: title.value,
                 body: body.value,
-                tags: tags.value
+                tags: tags.value,
+                createdAt: new Date().toLocaleDateString()
             };
 
-            await fetch('http://localhost:3000/posts', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(post)
-            });
+            await addDoc(collection(firedb, "posts"), post);
 
             router.push({ name: 'home' });
 
         }
-
-
         return { title, body, tag, tags, handleKeyDown, handleSubmit };
-
     }
 }
 </script>

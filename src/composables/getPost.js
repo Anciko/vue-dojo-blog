@@ -1,4 +1,8 @@
 import { ref } from "vue"
+import { doc, getDoc } from "firebase/firestore";
+import { firedb } from "../firebase/config";
+
+
 
 let getPost = (id) => {
     let post = ref(null);
@@ -6,12 +10,14 @@ let getPost = (id) => {
 
     let load = async () => {
         try {
-            let data = await fetch('http://localhost:3000/posts/' + id);
-            if (!data.ok) {
-                return Error("That Post is not found");
-            }
+            const fire_post = doc(firedb, "posts", id);
+            const docPost = await getDoc(fire_post);
 
-            post.value = await data.json();
+            if (docPost.exists()) {
+                post.value = docPost.data();
+            } else {
+                console.log("No Such document!");
+            }
 
         } catch (err) {
             error.value = err.message;

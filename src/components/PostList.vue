@@ -9,7 +9,6 @@ import SinglePost from './SinglePost.vue'
 export default {
     props: ['posts'],
     components: { SinglePost }
-
 }
 </script>
 
